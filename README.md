@@ -1,2 +1,2 @@
 # derpylstarr.github.io
-derpylstarr.site
+derpylstarr-site
