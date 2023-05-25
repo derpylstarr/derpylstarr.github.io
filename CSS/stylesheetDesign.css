@@ -120,12 +120,18 @@ a.link2 {
   font-weight: 300;
   letter-spacing: 0.5px;
   display: grid;
+
+
+  background-color:rgba(255, 255, 255, 0.404) ;
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
+  background-size: cover; 
 }
 
 .body-text {
   left: 0px;
   right: 0px;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   text-align: center;
   color: #000000;
   text-shadow: rgb(255, 255, 255) 0.5px 0 10px;
@@ -135,7 +141,10 @@ a.link2 {
   letter-spacing: 0.5px;
   display: grid;
   
-
+  background-color:rgba(255, 255, 255, 0.404) ;
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
+  background-size: cover; 
 }
 
 .body-button{
