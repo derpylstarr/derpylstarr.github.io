@@ -110,10 +110,10 @@ a.link2 {
   background-size: cover; 
 }
 
-.error_head{
+.help-head{
   display: -ms-inline-grid;
   justify-content: center;
-  background-color: #e97878;
+  background-color: #78dce9aa;
   border-style: none;
   padding: 10px;
   color: white;
