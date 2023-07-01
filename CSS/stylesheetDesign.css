@@ -92,19 +92,10 @@ a.link2 {
 }
 
 .backgroundAll{
-  left: 0px;
-  right: 0px;
-  margin-top: 50px;
-  text-align: center;
-  color: black;
-  font-family: 'Ubuntu';
-  font-size: 22px;
-  font-weight: 300;
-  letter-spacing: 0.5px;
   display: grid;
-
+  margin-top: 50px;
   background-color:gray ;
-  background: url(../Assets/20220719_125450.jpg);
+  background: url(../Assets/20220703_095150\(0\).jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;  
   background-size: cover; 
@@ -114,7 +105,7 @@ a.link2 {
   margin-top: 40px;
   text-align: center;
   color: #000000;
-  text-shadow: rgb(255, 255, 255) 0.5px 0 10px;
+  /* text-shadow: rgb(255, 255, 255) 0.5px 0 10px; */
   font-family: 'Ubuntu';
   font-size: 48px;
   font-weight: 300;
@@ -122,7 +113,7 @@ a.link2 {
   display: grid;
 
 
-  background-color:rgba(255, 255, 255, 0.404) ;
+  background-color:rgba(255, 255, 255, 0.609) ;
   background-repeat: no-repeat;
   background-attachment: fixed;  
   background-size: cover; 
@@ -134,14 +125,14 @@ a.link2 {
   /* margin-top: 15px; */
   text-align: center;
   color: #000000;
-  text-shadow: rgb(255, 255, 255) 0.5px 0 10px;
+  /* text-shadow: rgb(255, 255, 255) 0.5px 0 10px; */
   font-family: 'Ubuntu';
   font-size: 24px;
   font-weight: 400;
   letter-spacing: 0.5px;
   display: grid;
   
-  background-color:rgba(255, 255, 255, 0.404) ;
+  /* background-color:rgba(255, 255, 255, 0.404) ; */
   background-repeat: no-repeat;
   background-attachment: fixed;  
   background-size: cover; 
@@ -183,6 +174,23 @@ a.link2 {
   cursor: default;
 }
 
+.arrow-button{
+  align-items: center;
+  font-size: 24px;
+  background-color: #78d1e9;
+  border-color: #78d1e9;
+  border-style: none;
+  padding: 20px;
+  border-width: 3px;
+  color: white;
+  text-align: center;
+  font-family: 'Ubuntu';
+  font-size: medium;
+  height: 100px;
+  width: 200px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
 .material-symbols-outlined {
 
@@ -216,6 +224,49 @@ a.link2 {
   direction: ltr;
   -webkit-font-smoothing: antialiased;
 }
+
+.container {
+  align-items: center;
+  margin: auto;
+  display: inline-flex;
+}
+
+.box {
+
+  margin: 20px;
+  width: 500px;
+  height: 500px;
+  background-color: #ccccccb4;
+  
+  
+  text-align: center;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 28px;
+
+  border-radius: 12px;
+}
+
+.box:hover{
+  background-color: #78d1e983;
+  color: white;
+  font-variation-settings:
+  'FILL' 1,
+}
+
+
+hr {
+  color: #000000; 
+  border-top: 4px solid #000000;
+  border-bottom: #000000;
+  border-left: #00000000;
+  border-right: #00000000;
+  border-radius: 6px;
+  margin: 25px;
+  height:0.1px;
+  border-radius: 10px;
+}
+
 
 .footerbar-button{
   align-items: center;
