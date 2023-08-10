@@ -1,0 +1,1057 @@
+/* SOURCE FILE: AnchorPosition.js */
+function getAnchorPosition(anchorname){var useWindow=false;var coordinates=new Object();var x=0,y=0;var use_gebi=false, use_css=false, use_layers=false;if(document.getElementById){use_gebi=true;}else if(document.all){use_css=true;}else if(document.layers){use_layers=true;}if(use_gebi && document.all){x=AnchorPosition_getPageOffsetLeft(document.all[anchorname]);y=AnchorPosition_getPageOffsetTop(document.all[anchorname]);}else if(use_gebi){var o=document.getElementById(anchorname);x=AnchorPosition_getPageOffsetLeft(o);y=AnchorPosition_getPageOffsetTop(o);}else if(use_css){x=AnchorPosition_getPageOffsetLeft(document.all[anchorname]);y=AnchorPosition_getPageOffsetTop(document.all[anchorname]);}else if(use_layers){var found=0;for(var i=0;i<document.anchors.length;i++){if(document.anchors[i].name==anchorname){found=1;break;}}if(found==0){coordinates.x=0;coordinates.y=0;return coordinates;}x=document.anchors[i].x;y=document.anchors[i].y;}else{coordinates.x=0;coordinates.y=0;return coordinates;}coordinates.x=x;coordinates.y=y;return coordinates;}
+function getAnchorWindowPosition(anchorname){var coordinates=getAnchorPosition(anchorname);var x=0;var y=0;if(document.getElementById){if(isNaN(window.screenX)){x=coordinates.x-document.body.scrollLeft+window.screenLeft;y=coordinates.y-document.body.scrollTop+window.screenTop;}else{x=coordinates.x+window.screenX+(window.outerWidth-window.innerWidth)-window.pageXOffset;y=coordinates.y+window.screenY+(window.outerHeight-24-window.innerHeight)-window.pageYOffset;}}else if(document.all){x=coordinates.x-document.body.scrollLeft+window.screenLeft;y=coordinates.y-document.body.scrollTop+window.screenTop;}else if(document.layers){x=coordinates.x+window.screenX+(window.outerWidth-window.innerWidth)-window.pageXOffset;y=coordinates.y+window.screenY+(window.outerHeight-24-window.innerHeight)-window.pageYOffset;}coordinates.x=x;coordinates.y=y;return coordinates;}
+function AnchorPosition_getPageOffsetLeft(el){var ol=el.offsetLeft;while((el=el.offsetParent) != null){ol += el.offsetLeft;}return ol;}
+function AnchorPosition_getWindowOffsetLeft(el){return AnchorPosition_getPageOffsetLeft(el)-document.body.scrollLeft;}
+function AnchorPosition_getPageOffsetTop(el){var ot=el.offsetTop;while((el=el.offsetParent) != null){ot += el.offsetTop;}return ot;}
+function AnchorPosition_getWindowOffsetTop(el){return AnchorPosition_getPageOffsetTop(el)-document.body.scrollTop;}
+
+/* SOURCE FILE: date.js */
+var MONTH_NAMES=new Array('January','February','March','April','May','June','July','August','September','October','November','December','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');var DAY_NAMES=new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sun','Mon','Tue','Wed','Thu','Fri','Sat');
+function LZ(x){return(x<0||x>9?"":"0")+x}
+function isDate(val,format){var date=getDateFromFormat(val,format);if(date==0){return false;}return true;}
+function compareDates(date1,dateformat1,date2,dateformat2){var d1=getDateFromFormat(date1,dateformat1);var d2=getDateFromFormat(date2,dateformat2);if(d1==0 || d2==0){return -1;}else if(d1 > d2){return 1;}return 0;}
+function formatDate(date,format){format=format+"";var result="";var i_format=0;var c="";var token="";var y=date.getYear()+"";var M=date.getMonth()+1;var d=date.getDate();var E=date.getDay();var H=date.getHours();var m=date.getMinutes();var s=date.getSeconds();var yyyy,yy,MMM,MM,dd,hh,h,mm,ss,ampm,HH,H,KK,K,kk,k;var value=new Object();if(y.length < 4){y=""+(y-0+1900);}value["y"]=""+y;value["yyyy"]=y;value["yy"]=y.substring(2,4);value["M"]=M;value["MM"]=LZ(M);value["MMM"]=MONTH_NAMES[M-1];value["NNN"]=MONTH_NAMES[M+11];value["d"]=d;value["dd"]=LZ(d);value["E"]=DAY_NAMES[E+7];value["EE"]=DAY_NAMES[E];value["H"]=H;value["HH"]=LZ(H);if(H==0){value["h"]=12;}else if(H>12){value["h"]=H-12;}else{value["h"]=H;}value["hh"]=LZ(value["h"]);if(H>11){value["K"]=H-12;}else{value["K"]=H;}value["k"]=H+1;value["KK"]=LZ(value["K"]);value["kk"]=LZ(value["k"]);if(H > 11){value["a"]="PM";}else{value["a"]="AM";}value["m"]=m;value["mm"]=LZ(m);value["s"]=s;value["ss"]=LZ(s);while(i_format < format.length){c=format.charAt(i_format);token="";while((format.charAt(i_format)==c) &&(i_format < format.length)){token += format.charAt(i_format++);}if(value[token] != null){result=result + value[token];}else{result=result + token;}}return result;}
+function _isInteger(val){var digits="1234567890";for(var i=0;i < val.length;i++){if(digits.indexOf(val.charAt(i))==-1){return false;}}return true;}
+function _getInt(str,i,minlength,maxlength){for(var x=maxlength;x>=minlength;x--){var token=str.substring(i,i+x);if(token.length < minlength){return null;}if(_isInteger(token)){return token;}}return null;}
+function getDateFromFormat(val,format){val=val+"";format=format+"";var i_val=0;var i_format=0;var c="";var token="";var token2="";var x,y;var now=new Date();var year=now.getYear();var month=now.getMonth()+1;var date=1;var hh=now.getHours();var mm=now.getMinutes();var ss=now.getSeconds();var ampm="";while(i_format < format.length){c=format.charAt(i_format);token="";while((format.charAt(i_format)==c) &&(i_format < format.length)){token += format.charAt(i_format++);}if(token=="yyyy" || token=="yy" || token=="y"){if(token=="yyyy"){x=4;y=4;}if(token=="yy"){x=2;y=2;}if(token=="y"){x=2;y=4;}year=_getInt(val,i_val,x,y);if(year==null){return 0;}i_val += year.length;if(year.length==2){if(year > 70){year=1900+(year-0);}else{year=2000+(year-0);}}}else if(token=="MMM"||token=="NNN"){month=0;for(var i=0;i<MONTH_NAMES.length;i++){var month_name=MONTH_NAMES[i];if(val.substring(i_val,i_val+month_name.length).toLowerCase()==month_name.toLowerCase()){if(token=="MMM"||(token=="NNN"&&i>11)){month=i+1;if(month>12){month -= 12;}i_val += month_name.length;break;}}}if((month < 1)||(month>12)){return 0;}}else if(token=="EE"||token=="E"){for(var i=0;i<DAY_NAMES.length;i++){var day_name=DAY_NAMES[i];if(val.substring(i_val,i_val+day_name.length).toLowerCase()==day_name.toLowerCase()){i_val += day_name.length;break;}}}else if(token=="MM"||token=="M"){month=_getInt(val,i_val,token.length,2);if(month==null||(month<1)||(month>12)){return 0;}i_val+=month.length;}else if(token=="dd"||token=="d"){date=_getInt(val,i_val,token.length,2);if(date==null||(date<1)||(date>31)){return 0;}i_val+=date.length;}else if(token=="hh"||token=="h"){hh=_getInt(val,i_val,token.length,2);if(hh==null||(hh<1)||(hh>12)){return 0;}i_val+=hh.length;}else if(token=="HH"||token=="H"){hh=_getInt(val,i_val,token.length,2);if(hh==null||(hh<0)||(hh>23)){return 0;}i_val+=hh.length;}else if(token=="KK"||token=="K"){hh=_getInt(val,i_val,token.length,2);if(hh==null||(hh<0)||(hh>11)){return 0;}i_val+=hh.length;}else if(token=="kk"||token=="k"){hh=_getInt(val,i_val,token.length,2);if(hh==null||(hh<1)||(hh>24)){return 0;}i_val+=hh.length;hh--;}else if(token=="mm"||token=="m"){mm=_getInt(val,i_val,token.length,2);if(mm==null||(mm<0)||(mm>59)){return 0;}i_val+=mm.length;}else if(token=="ss"||token=="s"){ss=_getInt(val,i_val,token.length,2);if(ss==null||(ss<0)||(ss>59)){return 0;}i_val+=ss.length;}else if(token=="a"){if(val.substring(i_val,i_val+2).toLowerCase()=="am"){ampm="AM";}else if(val.substring(i_val,i_val+2).toLowerCase()=="pm"){ampm="PM";}else{return 0;}i_val+=2;}else{if(val.substring(i_val,i_val+token.length)!=token){return 0;}else{i_val+=token.length;}}}if(i_val != val.length){return 0;}if(month==2){if( ((year%4==0)&&(year%100 != 0) ) ||(year%400==0) ){if(date > 29){return 0;}}else{if(date > 28){return 0;}}}if((month==4)||(month==6)||(month==9)||(month==11)){if(date > 30){return 0;}}if(hh<12 && ampm=="PM"){hh=hh-0+12;}else if(hh>11 && ampm=="AM"){hh-=12;}var newdate=new Date(year,month-1,date,hh,mm,ss);return newdate.getTime();}
+
+function parseDate(val)
+{
+	var preferEuro=(arguments.length==2)?arguments[1]:false;
+	generalFormats=new Array('y-M-d','MMM d, y','MMM d,y','y-MMM-d','d-MMM-y','MMM d');
+	monthFirst=new Array('M/d/y','M-d-y','M.d.y','MMM-d','M/d','M-d');
+	dateFirst =new Array('d/M/y','d-M-y','d.M.y','d-MMM','d/M','d-M');
+	var checkList=new Array('generalFormats',preferEuro?'dateFirst':'monthFirst',preferEuro?'monthFirst':'dateFirst');var d=null;
+	for(var i=0;i<checkList.length;i++)
+	{
+		var l=window[checkList[i]];
+		for(var j=0;j<l.length;j++)
+		{
+			d=getDateFromFormat(val,l[j]);
+			if(d!=0)
+			{
+				//alert("returning not null from paseDate method");
+				return new Date(d);
+			}
+		}
+	}
+	alert("returning null from parseDate method");
+return null;
+}
+
+/* SOURCE FILE: PopupWindow.js */
+
+function PopupWindow_getXYPosition(anchorname){var coordinates;if(this.type == "WINDOW"){coordinates = getAnchorWindowPosition(anchorname);}else{coordinates = getAnchorPosition(anchorname);}this.x = coordinates.x;this.y = coordinates.y;}
+
+function PopupWindow_setSize(width,height)
+{
+	//alert("PopupWindow_setSize method called");
+	this.width = width;
+	this.height = height;
+}
+
+function PopupWindow_populate(contents){this.contents = contents;this.populated = false;}
+
+function PopupWindow_setUrl(url){this.url = url;}
+
+function PopupWindow_setWindowProperties(props){this.windowProperties = props;}
+
+function PopupWindow_refresh(){if(this.divName != null){if(this.use_gebi){document.getElementById(this.divName).innerHTML = this.contents;}else if(this.use_css){document.all[this.divName].innerHTML = this.contents;}else if(this.use_layers){var d = document.layers[this.divName];d.document.open();d.document.writeln(this.contents);d.document.close();}}else{if(this.popupWindow != null && !this.popupWindow.closed){if(this.url!=""){this.popupWindow.location.href=this.url;}else{this.popupWindow.document.open();this.popupWindow.document.writeln(this.contents);this.popupWindow.document.close();}this.popupWindow.focus();}}}
+
+function PopupWindow_showPopup(anchorname)
+{
+	this.getXYPosition(anchorname);
+	this.x += this.offsetX;
+	this.y += this.offsetY;
+	if(!this.populated &&(this.contents != ""))
+	{
+		this.populated = true;
+		this.refresh();
+	}
+	if(this.divName != null)
+	{
+		if(this.use_gebi)
+		{
+			document.getElementById(this.divName).style.left = this.x + "px";document.getElementById(this.divName).style.top = this.y + "px";document.getElementById(this.divName).style.visibility = "visible";
+		}
+		else if(this.use_css)
+		{
+			document.all[this.divName].style.left = this.x;document.all[this.divName].style.top = this.y;document.all[this.divName].style.visibility = "visible";
+		}
+		else if(this.use_layers){document.layers[this.divName].left = this.x;document.layers[this.divName].top = this.y;document.layers[this.divName].visibility = "visible";
+		}
+	}
+	else
+	{
+		if(this.popupWindow == null || this.popupWindow.closed)
+		{
+			if(this.x<0)
+			{
+				this.x=0;
+			}
+			if(this.y<0)
+			{
+				this.y=0;
+			}
+			if(screen && screen.availHeight)
+			{
+				if((this.y + this.height) > screen.availHeight)
+				{
+					this.y = screen.availHeight - this.height;
+				}
+			}
+			if(screen && screen.availWidth)
+			{
+				if((this.x + this.width) > screen.availWidth)
+				{
+					this.x = screen.availWidth - this.width;
+				}
+			}
+			//alert("The width of pop up window is" + this.width);
+			//alert("The height of pop up window is" + this.height);
+			//alert("The X of pop up window is" + this.x);
+			//alert("The Y of pop up window is" + this.y);
+			var avoidAboutBlank = window.opera ||( document.layers && !navigator.mimeTypes['*']) || navigator.vendor == 'KDE' ||( document.childNodes && !document.all && !navigator.taintEnabled);
+			this.popupWindow = window.open(avoidAboutBlank?"":"about:blank","window_"+anchorname,this.windowProperties+",width="+this.width+",height="+this.height+",screenX="+this.x+",left="+this.x+",screenY="+this.y+",top="+this.y+"");
+		}
+	this.refresh();
+	}
+}
+
+function PopupWindow_hidePopup(){if(this.divName != null){if(this.use_gebi){document.getElementById(this.divName).style.visibility = "hidden";}else if(this.use_css){document.all[this.divName].style.visibility = "hidden";}else if(this.use_layers){document.layers[this.divName].visibility = "hidden";}}else{if(this.popupWindow && !this.popupWindow.closed){this.popupWindow.close();this.popupWindow = null;}}}
+
+function PopupWindow_isClicked(e){if(this.divName != null){if(this.use_layers){var clickX = e.pageX;var clickY = e.pageY;var t = document.layers[this.divName];if((clickX > t.left) &&(clickX < t.left+t.clip.width) &&(clickY > t.top) &&(clickY < t.top+t.clip.height)){return true;}else{return false;}}else if(document.all){var t = window.event.srcElement;while(t.parentElement != null){if(t.id==this.divName){return true;}t = t.parentElement;}return false;}else if(this.use_gebi && e){var t = e.originalTarget;while(t.parentNode != null){if(t.id==this.divName){return true;}t = t.parentNode;}return false;}return false;}return false;}
+
+function PopupWindow_hideIfNotClicked(e){if(this.autoHideEnabled && !this.isClicked(e)){this.hidePopup();}}
+
+function PopupWindow_autoHide(){this.autoHideEnabled = true;}
+
+function PopupWindow_hidePopupWindows(e){for(var i=0;i<popupWindowObjects.length;i++){if(popupWindowObjects[i] != null){var p = popupWindowObjects[i];p.hideIfNotClicked(e);}}}
+
+function PopupWindow_attachListener(){if(document.layers){document.captureEvents(Event.MOUSEUP);}window.popupWindowOldEventListener = document.onmouseup;if(window.popupWindowOldEventListener != null){document.onmouseup = new Function("window.popupWindowOldEventListener();PopupWindow_hidePopupWindows();");}else{document.onmouseup = PopupWindow_hidePopupWindows;}}
+
+function PopupWindow(title)
+{
+	//alert("PopupWindow method called");
+	if(!window.popupWindowIndex)
+	{
+		//alert("window.popupWindowIndex");
+		window.popupWindowIndex = 0;
+	}
+	if(!window.popupWindowObjects)
+	{
+		//alert("window.popupWindowObjects");
+		window.popupWindowObjects = new Array();
+	}
+	if(!window.listenerAttached)
+	{
+		window.listenerAttached = true;
+		PopupWindow_attachListener();
+	}
+	this.index = popupWindowIndex++;
+	popupWindowObjects[this.index] = this;
+	//alert(this);
+	this.divName = null;
+	this.popupWindow = null;
+	this.width=0;
+	this.height=0;
+	this.populated = false;
+	this.visible = false;
+	this.autoHideEnabled = false;
+	this.contents = "";
+	this.url="";
+	this.windowProperties="toolbar=no,location=no,status=no,menubar=no,scrollbars=no,alwaysRaised,dependent,titlebar=no";
+	
+	this.type="WINDOW";
+	
+	//if(arguments.length>0)
+	//{
+	//	this.type="DIV";
+	//	this.divName = arguments[0];
+	//}
+	//else
+	//{
+	//	this.type="WINDOW";
+	//}
+	this.use_gebi = false;
+	this.use_css = false;
+	this.use_layers = false;
+	if(document.getElementById)
+	{
+		this.use_gebi = true;
+	}
+	else if(document.all)
+	{
+		this.use_css = true;
+	}
+	else if(document.layers)
+	{
+		this.use_layers = true;
+	}
+	else
+	{
+		this.type = "WINDOW";
+	}
+	this.offsetX = 0;
+	this.offsetY = 0;
+	this.getXYPosition = PopupWindow_getXYPosition;
+	this.populate = PopupWindow_populate;
+	this.setUrl = PopupWindow_setUrl;
+	this.setWindowProperties = PopupWindow_setWindowProperties;
+	this.refresh = PopupWindow_refresh;
+	this.showPopup = PopupWindow_showPopup;
+	this.hidePopup = PopupWindow_hidePopup;
+	this.setSize = PopupWindow_setSize;
+	this.isClicked = PopupWindow_isClicked;
+	this.autoHide = PopupWindow_autoHide;
+	this.hideIfNotClicked = PopupWindow_hideIfNotClicked;
+	this.title=title;
+}
+
+
+
+
+/* SOURCE FILE: CalendarPopup.js */
+
+function CalendarPopup(title)
+{
+	var c;
+	//alert("Inside calender popup");
+	if(arguments.length>0)
+	{
+		//alert("arguments length > 0");
+		c = new PopupWindow(arguments[0]);
+		if(is_ie4up)
+		{
+		  c.setSize(245,200);
+		}
+		else
+		{
+		  c.setSize(245,230);
+		}
+	}
+	else
+	{
+		//alert("arguments length = 0");
+		c = new PopupWindow();
+		if(is_ie4up)
+		{
+		  c.setSize(245,200);
+		}
+		else
+		{
+		  c.setSize(245,230);
+		}
+	}
+	c.offsetX = 15;
+	c.offsetY = 15;
+	c.autoHide();
+	c.monthNames = new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+	c.monthAbbreviations = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+	c.dayHeaders = new Array("S","M","T","W","T","F","S");
+	c.returnFunction = "CP_tmpReturnFunction";
+	c.returnMonthFunction = "CP_tmpReturnMonthFunction";
+	c.returnQuarterFunction = "CP_tmpReturnQuarterFunction";
+	c.returnYearFunction = "CP_tmpReturnYearFunction";
+	c.weekStartDay = 1;
+	c.isShowYearNavigation = false;
+	c.displayType = "date";
+	c.disabledWeekDays = new Object();
+	c.disabledDatesExpression = "";
+	c.pymntDate = ""
+	c.yearSelectStartOffset = 2;
+	c.currentDate = null;
+	c.pymntDate= null;
+	c.todayText="Today's date: ";
+	c.firstText="Please click on the date you want to search for."
+	c.cssPrefix="";
+	c.isShowNavigationDropdowns=false;
+	c.isShowYearNavigationInput=false;
+	window.CP_calendarObject = null;
+	window.CP_targetInput = null;
+	window.CP_targetHiddenInput = null;
+	window.CP_dateFormat = "MM/dd/yyyy";
+
+	c.copyMonthNamesToWindow = CP_copyMonthNamesToWindow;
+	c.setReturnFunction = CP_setReturnFunction;
+	c.setReturnMonthFunction = CP_setReturnMonthFunction;
+	c.setReturnQuarterFunction = CP_setReturnQuarterFunction;
+	c.setReturnYearFunction = CP_setReturnYearFunction;
+	c.setMonthNames = CP_setMonthNames;
+	c.setMonthAbbreviations = CP_setMonthAbbreviations;
+	c.setDayHeaders = CP_setDayHeaders;
+	c.setWeekStartDay = CP_setWeekStartDay;
+	c.setDisplayType = CP_setDisplayType;
+	c.setDisabledWeekDays = CP_setDisabledWeekDays;
+	c.addDisabledDates = CP_addDisabledDates;
+	c.setYearSelectStartOffset = CP_setYearSelectStartOffset;
+	c.setTodayText = CP_setTodayText;
+	c.setFirstText = CP_setFirstText;
+	c.showYearNavigation = CP_showYearNavigation;
+	c.showCalendar = CP_showCalendar;
+	c.hideCalendar = CP_hideCalendar;
+	c.getStyles = getCalendarStyles;
+	c.refreshCalendar = CP_refreshCalendar;
+	c.getCalendar = CP_getCalendar;
+	c.select = CP_select;
+	c.setCssPrefix = CP_setCssPrefix;
+	c.showNavigationDropdowns = CP_showNavigationDropdowns;
+	c.showYearNavigationInput = CP_showYearNavigationInput;
+	c.copyMonthNamesToWindow();
+	
+	return c;
+}
+function CP_copyMonthNamesToWindow(){if(typeof(window.MONTH_NAMES)!="undefined" && window.MONTH_NAMES!=null){window.MONTH_NAMES = new Array();for(var i=0;i<this.monthNames.length;i++){window.MONTH_NAMES[window.MONTH_NAMES.length] = this.monthNames[i];}for(var i=0;i<this.monthAbbreviations.length;i++){window.MONTH_NAMES[window.MONTH_NAMES.length] = this.monthAbbreviations[i];}}}
+function CP_tmpReturnFunction(y,m,d){if(window.CP_targetInput!=null){var dt = new Date(y,m-1,d,0,0,0);if(window.CP_calendarObject!=null){window.CP_calendarObject.copyMonthNamesToWindow();}window.CP_targetInput.value = formatDate(dt,window.CP_dateFormat);window.CP_targetHiddenInput.value = formatDate(dt,window.CP_dateFormat);}else{alert('Use setReturnFunction() to define which function will get the clicked results!');}}
+function CP_tmpReturnMonthFunction(y,m){alert('Use setReturnMonthFunction() to define which function will get the clicked results!\nYou clicked: year='+y+' , month='+m);}
+function CP_tmpReturnQuarterFunction(y,q){alert('Use setReturnQuarterFunction() to define which function will get the clicked results!\nYou clicked: year='+y+' , quarter='+q);}
+function CP_tmpReturnYearFunction(y){alert('Use setReturnYearFunction() to define which function will get the clicked results!\nYou clicked: year='+y);}
+function CP_setReturnFunction(name){this.returnFunction = name;}
+function CP_setReturnMonthFunction(name){this.returnMonthFunction = name;}
+function CP_setReturnQuarterFunction(name){this.returnQuarterFunction = name;}
+function CP_setReturnYearFunction(name){this.returnYearFunction = name;}
+function CP_setMonthNames(){for(var i=0;i<arguments.length;i++){this.monthNames[i] = arguments[i];}this.copyMonthNamesToWindow();}
+function CP_setMonthAbbreviations(){for(var i=0;i<arguments.length;i++){this.monthAbbreviations[i] = arguments[i];}this.copyMonthNamesToWindow();}
+function CP_setDayHeaders(){for(var i=0;i<arguments.length;i++){this.dayHeaders[i] = arguments[i];}}
+function CP_setWeekStartDay(day){this.weekStartDay = day;}
+function CP_showYearNavigation(){this.isShowYearNavigation =(arguments.length>0)?arguments[0]:true;}
+function CP_setDisplayType(type){if(type!="date"&&type!="week-end"&&type!="month"&&type!="quarter"&&type!="year"){alert("Invalid display type! Must be one of: date,week-end,month,quarter,year");return false;}this.displayType=type;}
+function CP_setYearSelectStartOffset(num){this.yearSelectStartOffset=num;}
+function CP_setDisabledWeekDays(){this.disabledWeekDays = new Object();for(var i=0;i<arguments.length;i++){this.disabledWeekDays[arguments[i]] = true;}}
+
+function CP_addDisabledDates(start, end)
+{
+  	//alert("start =="+start);
+  	//alert("end =="+end);
+	if(arguments.length==1)
+	{
+		//alert("the disabledDatesExpression has been set 1");
+		end=start;
+	}
+	if(start==null && end==null)
+	{
+		//alert("the disabledDatesExpression has been set 2");
+		return;
+	}
+	if(this.disabledDatesExpression!="")
+	{
+		this.disabledDatesExpression+= "||";
+	}
+	if(start!=null)
+	{
+		//alert("the disabledDatesExpression has been set 3");
+		start = parseDate(start);
+		//alert("The Start Date Passed is :" + start);
+		start=""+start.getFullYear()+LZ(start.getMonth()+1)+LZ(start.getDate());
+	}
+	if(end!=null)
+	{
+		//alert("the disabledDatesExpression has been set 4");
+		end=parseDate(end);
+		end=""+end.getFullYear()+LZ(end.getMonth()+1)+LZ(end.getDate());
+	}
+	if(start==null)
+	{
+		//alert("the disabledDatesExpression has been set 5");
+		this.disabledDatesExpression+="(ds>"+end+")";
+	}
+	else if(end  ==null)
+	{
+		//alert("the disabledDatesExpression has been set 6");
+		this.disabledDatesExpression+="(ds>="+start+")";
+		//alert("the disabledDatesExpression has been set 66" + this.disabledDatesExpression);
+	}
+	else
+	{
+		this.disabledDatesExpression+="(ds>="+start+"&&ds<="+end+")";
+		//alert("the disabledDatesExpression has been set 7");
+	}
+	//alert(this.disabledDatesExpression);
+}
+
+
+function CP_setTodayText(text)
+{
+	this.todayText = text;
+}
+function CP_setFirstText(text)
+{
+	this.firstText = text;
+}
+
+function CP_setCssPrefix(val){this.cssPrefix = val;}
+function CP_showNavigationDropdowns(){this.isShowNavigationDropdowns =(arguments.length>0)?arguments[0]:true;}
+function CP_showYearNavigationInput(){this.isShowYearNavigationInput =(arguments.length>0)?arguments[0]:true;}
+function CP_hideCalendar(){if(arguments.length > 0){window.popupWindowObjects[arguments[0]].hidePopup();}else{this.hidePopup();}}
+function CP_refreshCalendar(index){var calObject = window.popupWindowObjects[index];if(arguments.length>1){calObject.populate(calObject.getCalendar(arguments[1],arguments[2],arguments[3],arguments[4],arguments[5]));}else{calObject.populate(calObject.getCalendar());}calObject.refresh();}
+function CP_showCalendar(anchorname){if(arguments.length>1){if(arguments[1]==null||arguments[1]==""){this.currentDate=new Date();}else{this.currentDate=new Date(parseDate(arguments[1]));}}this.populate(this.getCalendar());this.showPopup(anchorname);}
+function CP_select(inputobj, linkname, format,inputhidobj)
+{
+		
+	var selectedDate=(arguments.length>4)?arguments[3]:null;
+	if(!window.getDateFromFormat){
+		alert("calendar.select: To use this method you must also include 'date.js' for date formatting");
+		return;
+		}
+		if(this.displayType!="date"&&this.displayType!="week-end"){
+			alert("calendar.select: This function can only be used with displayType 'date' or 'week-end'");
+			return;
+		}
+		if(inputobj.type!="text" && inputobj.type!="hidden" && inputobj.type!="textarea"){
+		alert("calendar.select: Input object passed is not a valid form input object");
+		window.CP_targetInput=null;
+		window.CP_targetHiddenInput=null;
+		return;
+		}
+		//if(inputobj.disabled){
+		//return;
+		//}
+		window.CP_targetInput = inputobj;
+		window.CP_targetHiddenInput=inputhidobj;
+		window.CP_calendarObject = this;
+		this.currentDate=null;
+		var time=0;
+		if(selectedDate!=null){
+		time = getDateFromFormat(selectedDate,format)
+		}else if(inputobj.value!=""){
+		time = getDateFromFormat(inputobj.value,format);
+		}
+		if(selectedDate!=null || inputobj.value!=""){
+			if(time==0){
+					this.currentDate=null;
+				}
+				else{
+					this.currentDate=new Date(time);
+				}
+			}
+				window.CP_dateFormat = format;
+				this.showCalendar(linkname);
+}
+
+function getCalendarStyles()
+{
+	var result = "";
+	var p = "";
+	if(this!=null && typeof(this.cssPrefix)!="undefined" && this.cssPrefix!=null && this.cssPrefix!="")
+	{
+		p=this.cssPrefix;
+	}
+	
+	result += "<STYLE>\n";
+	
+	result += "."+p+"cpYearNavigation,."+p+"cpMonthNavigation{background-color:#C0C0C0;text-align:center;vertical-align:center;text-decoration:none;color:#000000;	font-weight:bold;}\n";
+	
+	result += "."+p+"cpDayColumnHeader, ."+p+"cpYearNavigation,."+p+"cpMonthNavigation,."+p+"cpCurrentMonthDate,."+p+"cpCurrentMonthDateDisabled,."+p+"cpOtherMonthDate,."+p+"cpOtherMonthDateDisabled,."+p+"cpCurrentDate,."+p+"cpCurrentDateDisabled,."+p+"cpTodayText,."+p+"cpTodayTextDisabled,."+p+"cpText{font-family:arial;font-size:8pt;}\n";
+	
+	
+	result += "."+p+"cpCurrentMonthDate, ."+p+"cpOtherMonthDate, ."+p+"cpCurrentDate{text-align:center;text-decoration:none;}\n";
+	
+	result += "."+p+"cpCurrentMonthDateDisabled, ."+p+"cpOtherMonthDateDisabled{color:#000000;text-align:center;}\n";
+	
+	result += "."+p+"cpCurrentDateDisabled{color:#6699ff;text-align:center;font-family:arial;font-size:8pt; font-weight:bold;}\n";
+	
+	result += "."+p+"cpPymntDateDisabled{color:#000000;text-align:center;font-family:arial;font-size:8pt; font-weight:bold;}\n";
+	
+	result += "."+p+"cpCurrentMonthDate, .cpCurrentDate{color:#000000;font-weight:bold;}\n";
+
+	result += "."+p+"cpDayColumnHeader{color:#000000;font-weight:bold;}\n";
+
+	result += "."+p+"cpCurrentDate{color:#6699ff;text-align:center;font-family:arial;font-size:8pt; font-weight:bold;}\n";	
+	
+	result += "."+p+"cpOtherMonthDate{color:#808080;}\n";
+	
+	result += "TD."+p+"cpDayColumnHeader{text-align:center;border:solid thin #C0C0C0;border-width:1px;}\n";
+						
+	result += "TD."+p+"cpCurrentDate{color:#6699ff;background-color: #ffffff;border:solid thin #C0C0C0;border-width:1px;}\n";
+	
+	result += "TD."+p+"cpDisabledDate{color:white;background-color: #C0C0C0;border:solid thin #C0C0C0;border-width:1px;}\n";
+
+	result += "TD."+p+"cpCurrentDisabledDate{color:#6699ff;background-color: #ffffff;border:solid thin #C0C0C0;border-width:1px;}\n";
+	
+	result += "TD."+p+"cpCurrentMonthDate{color:white;background-color: #ffffff;border:solid thin #C0C0C0;border-width:1px;}\n";
+
+	result += "TD."+p+"cpDoNotShowDate{color:white;background-color: #ffffff;}\n";
+	
+	result += "TD."+p+"cpPymntDate{color:white;background-color: #ffff00;border:solid thin #C0C0C0;border-width:1px;}\n";
+	
+	result += "TD."+p+"cpPymntLegendDate{color:white;background-color: #ffff00;}\n";
+	
+	result += "TD."+p+"cpCurrentDateDisabled{color:#6699ff;border-width:1px;border:solid thin #FFAAAA;}\n";
+	
+	result += "TD."+p+"cpTodayText, TD."+p+"cpTodayTextDisabled{border:solid thin #C0C0C0;border-width:1px 0px 0px 0px;}\n";
+	
+	result += "A."+p+"cpTodayText, SPAN."+p+"cpTodayTextDisabled{height:20px;}\n";
+	
+	result += "A."+p+"cpTodayText{color:black;}\n";
+	
+	result += "."+p+"cpTodayTextDisabled{color:#6699ff;text-align:center;font-family:arial;font-size:8pt; font-weight:bold;}\n";
+
+	result += "."+p+"cpFirstTextDisabled{color:#000000;text-align:center;font-family:arial;font-size:8pt; font-weight:normal;}\n";
+	
+	result += "."+p+"cpLegend{color:#000000;text-align:center;font-family:arial;font-size:7pt; font-weight:normal;}\n";
+
+	
+	result += "."+p+"cpBorder{border:solid thin #808080;}\n";result += "</STYLE>\n";
+	
+	return result;
+}
+	
+function CP_getCalendar()
+{
+	var now = new Date();
+	if(this.type == "WINDOW")
+	{
+		var windowref = "window.opener.";
+	}
+	else
+	{
+		var windowref = "";
+	}
+	var result = "";
+	if(this.type == "WINDOW")
+	{
+		//alert("this table 0");
+		result += "<HTML><HEAD><TITLE>";
+		result += this.title;
+		result += "</TITLE>"+this.getStyles()+"</HEAD><BODY MARGINWIDTH=0 MARGINHEIGHT=0 TOPMARGIN=0 RIGHTMARGIN=0 LEFTMARGIN=0>\n";
+		result += '<CENTER><TABLE WIDTH=100% BORDER=0 BORDERWIDTH=0 CELLSPACING=0 CELLPADDING=1>\n';
+	}
+	else
+	{
+		//alert("this table 1");
+		result += '<TABLE CLASS="'+this.cssPrefix+'cpBorder" WIDTH=144 BORDER=1 BORDERWIDTH=1 CELLSPACING=0 CELLPADDING=1>\n';
+		result += '<TR><TD ALIGN=CENTER>\n';
+		result += '<CENTER>\n';
+	}
+	if(this.displayType=="date" || this.displayType=="week-end")
+	{
+		if(this.currentDate==null)
+		{
+			this.currentDate = now;
+		}
+		if(arguments.length > 0)
+		{
+			var month = arguments[0];
+		}
+		else
+		{
+			var month = this.currentDate.getMonth()+1;
+		}
+		if(arguments.length > 1 && arguments[1]>0 && arguments[1]-0==arguments[1])
+		{
+			var year = arguments[1];
+		}
+		else
+		{
+			var year = this.currentDate.getFullYear();
+		}
+		var daysinmonth= new Array(0,31,28,31,30,31,30,31,31,30,31,30,31);
+		if( ((year%4 == 0)&&(year%100 != 0) ) ||(year%400 == 0) )
+		{
+			daysinmonth[2] = 29;
+		}
+		var current_month = new Date(year,month-1,1);
+		var display_year = year;
+		var display_month = month;
+		var display_date = 1;
+		var weekday= current_month.getDay();
+		var offset = 0;
+		offset =(weekday >= this.weekStartDay) ? weekday-this.weekStartDay : 7-this.weekStartDay+weekday ;
+		
+		if(offset > 0)
+		{
+			display_month--;
+			if(display_month < 1)
+			{
+				display_month = 12;
+				display_year--;
+			}
+			display_date = daysinmonth[display_month]-offset+1;
+		}
+		var next_month = month+1;
+		var next_month_year = year;
+		if(next_month > 12)
+		{
+			next_month=1;
+			next_month_year++;
+		}
+		var last_month = month-1;
+		var last_month_year = year;
+		if(last_month < 1)
+		{
+			last_month=12;
+			last_month_year--;
+		}
+		var date_class;
+		if(this.type!="WINDOW")
+		{
+			alert("this table 2");
+			result += "<TABLE WIDTH=144 BORDER=0 CELLSPACING=1 CELLPADDING=0>";
+		}
+		//result += '<TR>\n';
+		var refresh = windowref+'CP_refreshCalendar';
+		var refreshLink = 'javascript:' + refresh;
+		if(this.isShowNavigationDropdowns)
+		{
+
+		}
+		else
+		{
+			if(this.isShowYearNavigation)
+			{
+
+			}
+			else
+			{
+				
+// Display Today's date between this place				
+				result += '<TR VALIGN=MIDDLE>\n';
+				result += '	<TD COLSPAN=3 ALIGN=CENTER CLASS="'+this.cssPrefix+'cpTodayText" VALIGN=MIDDLE>\n';
+				result += '		<SPAN CLASS="'+this.cssPrefix+'cpTodayTextDisabled">'+this.todayText+formatDate(now,"MM/dd/yyyy")+'</SPAN>\n';
+				//result += '		<BR>\n';
+				result += '	</TD></TR>\n';
+				
+// Display Today's date between this place				
+				result += '<TR>\n';
+				result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation"  ALIGN=CENTER><A CLASS="'+this.cssPrefix+'cpMonthNavigation" HREF="'+refreshLink+'('+this.index+','+last_month+','+last_month_year+');">&lt;&lt;</A></TD>\n';
+// Display the Month and Year between this place				
+				result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation"  ALIGN=CENTER><SPAN CLASS="'+this.cssPrefix+'cpMonthNavigation">'+this.monthNames[month-1]+' '+year+'</SPAN></TD>\n';
+// Display the Month and Year between this place				
+				result += '<TD CLASS="'+this.cssPrefix+'cpMonthNavigation"  ALIGN=CENTER><A CLASS="'+this.cssPrefix+'cpMonthNavigation" HREF="'+refreshLink+'('+this.index+','+next_month+','+next_month_year+');">&gt;&gt;</A></TD>\n';
+			}
+		}
+		result += '</TR></TABLE>\n';
+		result += '<TABLE WIDTH=100% BORDER=0 CELLSPACING=1 CELLPADDING=1 ALIGN=CENTER>\n';
+		result += '<TR>\n';
+// Display "S M T W T F S " in this for loop		
+		for(var j=0;j<7;j++)
+		{
+			result += '<TD CLASS="'+this.cssPrefix+'cpDayColumnHeader" WIDTH="14%"><SPAN CLASS="'+this.cssPrefix+'cpDayColumnHeader">'+this.dayHeaders[(this.weekStartDay+j)%7]+'</TD>\n';
+		}
+// Display "S M T W T F S " in this for loop		
+		result += '</TR>\n';
+// Start Displaying Month Calendar  between this for loop		
+		for(var row=1;row<=6;row++)
+		{
+			result += '<TR>\n';
+// Start Displaying each day  between this for loop			
+			for(var col=1;col<=7;col++)
+			{
+				var disabled=false;
+				
+				if(this.disabledDatesExpression!="")
+				{
+					//alert("The disabledDatesExpression is ==" + this.disabledDatesExpression);
+					var ds=""+display_year+LZ(display_month)+LZ(display_date);
+					eval("disabled=("+this.disabledDatesExpression+")");
+				}
+				
+
+				var dateClass = "";
+
+				//var pDate = parseDate(this.pymntDate);
+				if((display_month == now.getMonth()+1) &&(display_date==now.getDate()) &&(display_year==now.getFullYear()))
+				{
+					//alert("1");
+					dateClass = "cpCurrentDate";
+				}
+				//else if((display_month == pDate.getMonth()+1) &&(display_date==pDate.getDate()) &&(display_year==pDate.getFullYear()))
+				//{
+					//alert("2");
+					//dateClass = "cpPymntDate";
+				//}				
+				else if(display_month == month)
+				{
+					//alert("3");
+					dateClass = "cpCurrentMonthDate";
+				}				
+				else
+				{
+					dateClass = "cpOtherMonthDate";
+				}
+// Actual display of date takes place here between if and else condition				
+				//alert("The display_date is " + display_date + "and the month is" + display_month + "and the now.month is " + now.getMonth());
+				//alert("The current_date is " + this.current_date + "and the month is" + this.current_month);
+				if(disabled || this.disabledWeekDays[col-1])
+				{
+					//alert("Disabled found true for" +  display_date);
+					if(dateClass == "cpCurrentDate")
+					{
+						
+						if(display_month == last_month || display_month == next_month)
+						{
+							
+							result += '	<TD CLASS="'+this.cssPrefix+'cpDoNotShowDate'+'" align=center><SPAN CLASS="'+this.cssPrefix+dateClass+'Disabled"></SPAN></TD>\n';
+						}
+						else 
+						{
+							//alert("I am in cpDisabledDate" + display_date+"-" + dateClass);
+							result += '	<TD CLASS="'+this.cssPrefix+'cpCurrentDisabledDate'+'" align=center><SPAN CLASS="'+this.cssPrefix+dateClass+'Disabled">'+display_date+'</SPAN></TD>\n';
+						}
+					}
+					else if(dateClass == "cpPymntDate")
+					{
+						if(display_month == last_month || display_month == next_month)
+						{
+							result += '	<TD CLASS="'+this.cssPrefix+'cpDoNotShowDate'+'" align=center><SPAN CLASS="'+this.cssPrefix+dateClass+'Disabled">&nbsp</SPAN></TD>\n';
+						}
+						else 
+						{
+							result += '	<TD CLASS="'+this.cssPrefix+dateClass+'" align=center><SPAN CLASS="'+this.cssPrefix+dateClass+'Disabled">'+display_date+'</SPAN></TD>\n';
+						}
+					}
+					else 
+					{
+						if(display_month == last_month || display_month == next_month)
+						{
+							//alert("I am in cpDoNotShowDate" + display_date+"-");
+							result += '	<TD CLASS="'+this.cssPrefix+'cpDoNotShowDate'+'" align=center><SPAN CLASS="'+this.cssPrefix+dateClass+'Disabled">&nbsp</SPAN></TD>\n';
+						}
+						else 
+						{
+							//alert("I am in cpDisabledDate" + display_date+"-" + dateClass);
+							result += '	<TD CLASS="'+this.cssPrefix+'cpDisabledDate'+'" align=center><SPAN CLASS="'+this.cssPrefix+dateClass+'Disabled">'+display_date+'</SPAN></TD>\n';
+						}
+					}										
+				}
+				else
+				{
+					var selected_date = display_date;
+					var selected_month = display_month;
+					var selected_year = display_year;
+					
+					if(display_month == last_month || display_month == next_month)
+					{
+						result += '	<TD CLASS="'+this.cssPrefix+'cpDoNotShowDate'+'" align=center border=0><SPAN CLASS="'+this.cssPrefix+dateClass+'">&nbsp</SPAN></TD>\n';
+					}
+					else 
+					{
+						
+						result += '	<TD CLASS="'+this.cssPrefix+dateClass+'" align=center><A HREF="javascript:'+windowref+this.returnFunction+'('+selected_year+','+selected_month+','+selected_date+');'+windowref+'CP_hideCalendar(\''+this.index+'\');" CLASS="'+this.cssPrefix+dateClass+'">'+display_date+'</A></TD>\n';
+					}
+				}
+// Actual display of date takes place here between if and else condition				
+				display_date++;
+				if(display_date > daysinmonth[display_month])
+				{
+					display_date=1;
+					display_month++;
+					
+					
+				}
+				if(display_month > 12)
+				{
+					display_month=1;
+					display_year++;
+				}
+			}
+// Start Displaying each day  between this for loop			
+			result += '</TR>';
+		}
+// Start Displaying Month Calendar  between this for loop			
+		var current_weekday = now.getDay() - this.weekStartDay;
+		if(current_weekday < 0)
+		{
+			current_weekday += 7;
+		}
+		result += '<TR height=10>\n';
+		result += '	<TD COLSPAN=7 ALIGN=CENTER CLASS="'+this.cssPrefix+'cpTodayText" height=10>\n';
+		
+		result += '		<SPAN CLASS="'+this.cssPrefix+'cpFirstTextDisabled">'+this.firstText+'</SPAN>\n';
+
+		//result += '		<BR>\n';
+		result += '	</TD></TR>\n';
+		result += '	</TABLE></CENTER>\n';		
+		//</TD></TR></TABLE>
+	}
+	if(this.displayType=="month" || this.displayType=="quarter" || this.displayType=="year")
+	{
+		if(arguments.length > 0)
+		{
+			var year = arguments[0];
+		}
+		else
+		{
+			if(this.displayType=="year")
+			{
+				var year = now.getFullYear()-this.yearSelectStartOffset;
+			}
+			else
+			{
+				var year = now.getFullYear();
+			}
+		}
+		if(this.displayType!="year" && this.isShowYearNavigation)
+		{
+			result += "<TABLE WIDTH=144 BORDER=0 BORDERWIDTH=0 CELLSPACING=0 CELLPADDING=0>";
+			result += '<TR>\n';
+			result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="22"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="javascript:'+windowref+'CP_refreshCalendar('+this.index+','+(year-1)+');">&lt;&lt;</A></TD>\n';
+			result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="100">'+year+'</TD>\n';
+			result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="22"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="javascript:'+windowref+'CP_refreshCalendar('+this.index+','+(year+1)+');">&gt;&gt;</A></TD>\n';
+			result += '</TR></TABLE>\n';
+		}
+	}
+	if(this.displayType=="month")
+	{
+		result += '<TABLE WIDTH=120 BORDER=0 CELLSPACING=1 CELLPADDING=0 ALIGN=CENTER>\n';
+		for(var i=0;i<4;i++)
+		{
+			result += '<TR>';
+			for(var j=0;j<3;j++)
+			{
+				var monthindex =((i*3)+j);
+				result += '<TD WIDTH=33% ALIGN=CENTER><A CLASS="'+this.cssPrefix+'cpText" HREF="javascript:'+windowref+this.returnMonthFunction+'('+year+','+(monthindex+1)+');'+windowref+'CP_hideCalendar(\''+this.index+'\');" CLASS="'+date_class+'">'+this.monthAbbreviations[monthindex]+'</A></TD>';
+			}
+			result += '</TR>';
+		}
+		result += '</TABLE></CENTER></TD></TR></TABLE>\n';
+	}
+	if(this.displayType=="quarter")
+	{
+		result += '<BR><TABLE WIDTH=120 BORDER=1 CELLSPACING=0 CELLPADDING=0 ALIGN=CENTER>\n';
+		for(var i=0;i<2;i++)
+		{
+			result += '<TR>';
+			for(var j=0;j<2;j++)
+			{
+				var quarter =((i*2)+j+1);
+				result += '<TD WIDTH=50% ALIGN=CENTER><BR><A CLASS="'+this.cssPrefix+'cpText" HREF="javascript:'+windowref+this.returnQuarterFunction+'('+year+','+quarter+');'+windowref+'CP_hideCalendar(\''+this.index+'\');" CLASS="'+date_class+'">Q'+quarter+'</A><BR><BR></TD>';
+			}
+			result += '</TR>';
+		}
+		result += '</TABLE></CENTER></TD></TR></TABLE>\n';
+	}
+	if(this.displayType=="year")
+	{
+		var yearColumnSize = 4;
+		result += "<TABLE WIDTH=144 BORDER=0 BORDERWIDTH=0 CELLSPACING=0 CELLPADDING=0>";
+		result += '<TR>\n';
+		result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="50%"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="javascript:'+windowref+'CP_refreshCalendar('+this.index+','+(year-(yearColumnSize*2))+');">&lt;&lt;</A></TD>\n';
+		result += '	<TD CLASS="'+this.cssPrefix+'cpYearNavigation" WIDTH="50%"><A CLASS="'+this.cssPrefix+'cpYearNavigation" HREF="javascript:'+windowref+'CP_refreshCalendar('+this.index+','+(year+(yearColumnSize*2))+');">&gt;&gt;</A></TD>\n';
+		result += '</TR></TABLE>\n';
+		result += '<TABLE WIDTH=120 BORDER=0 CELLSPACING=1 CELLPADDING=0 ALIGN=CENTER>\n';
+		for(var i=0;i<yearColumnSize;i++)
+		{
+			for(var j=0;j<2;j++)
+			{
+				var currentyear = year+(j*yearColumnSize)+i;
+				result += '<TD WIDTH=50% ALIGN=CENTER><A CLASS="'+this.cssPrefix+'cpText" HREF="javascript:'+windowref+this.returnYearFunction+'('+currentyear+');'+windowref+'CP_hideCalendar(\''+this.index+'\');" CLASS="'+date_class+'">'+currentyear+'</A></TD>';
+			}
+			result += '</TR>';
+		}
+			result += '</TABLE></CENTER></TD></TR></TABLE>\n';
+	}
+	if(this.type == "WINDOW")
+	{
+		result += "</BODY></HTML>\n";
+	}
+	return result;
+}
+
+///////////////////////// CODE FOR CHECKING BROWSER TYPE /////////////////////////////////
+
+// Ultimate client-side JavaScript client sniff. Version 3.03
+// (C) Netscape Communications 1999-2001.  Permission granted to reuse and distribute.
+// Revised 17 May 99 to add is_nav5up and is_ie5up (see below).
+// Revised 20 Dec 00 to add is_gecko and change is_nav5up to is_nav6up
+//                      also added support for IE5.5 Opera4&5 HotJava3 AOLTV
+// Revised 22 Feb 01 to correct Javascript Detection for IE 5.x, Opera 4, 
+//                      correct Opera 5 detection
+//                      add support for winME and win2k
+//                      synch with browser-type-oo.js
+// Revised 26 Mar 01 to correct Opera detection
+// Revised 02 Oct 01 to add IE6 detection
+
+// Everything you always wanted to know about your JavaScript client
+// but were afraid to ask. Creates "is_" variables indicating:
+// (1) browser vendor:
+//     is_nav, is_ie, is_opera, is_hotjava, is_webtv, is_TVNavigator, is_AOLTV
+// (2) browser version number:
+//     is_major (integer indicating major version number: 2, 3, 4 ...)
+//     is_minor (float   indicating full  version number: 2.02, 3.01, 4.04 ...)
+// (3) browser vendor AND major version number
+//     is_nav2, is_nav3, is_nav4, is_nav4up, is_nav6, is_nav6up, is_gecko, is_ie3,
+//     is_ie4, is_ie4up, is_ie5, is_ie5up, is_ie5_5, is_ie5_5up, is_ie6, is_ie6up, is_hotjava3, is_hotjava3up,
+//     is_opera2, is_opera3, is_opera4, is_opera5, is_opera5up
+// (4) JavaScript version number:
+//     is_js (float indicating full JavaScript version number: 1, 1.1, 1.2 ...)
+// (5) OS platform and version:
+//     is_win, is_win16, is_win32, is_win31, is_win95, is_winnt, is_win98, is_winme, is_win2k
+//     is_os2
+//     is_mac, is_mac68k, is_macppc
+//     is_unix
+//     is_sun, is_sun4, is_sun5, is_suni86
+//     is_irix, is_irix5, is_irix6
+//     is_hpux, is_hpux9, is_hpux10
+//     is_aix, is_aix1, is_aix2, is_aix3, is_aix4
+//     is_linux, is_sco, is_unixware, is_mpras, is_reliant
+//     is_dec, is_sinix, is_freebsd, is_bsd
+//     is_vms
+//
+// See http://www.it97.de/JavaScript/JS_tutorial/bstat/navobj.html and
+// http://www.it97.de/JavaScript/JS_tutorial/bstat/Browseraol.html
+// for detailed lists of userAgent strings.
+//
+// Note: you don't want your Nav4 or IE4 code to "turn off" or
+// stop working when new versions of browsers are released, so
+// in conditional code forks, use is_ie5up ("IE 5.0 or greater") 
+// is_opera5up ("Opera 5.0 or greater") instead of is_ie5 or is_opera5
+// to check version in code which you want to work on future
+// versions.
+
+    // convert all characters to lowercase to simplify testing
+    var agt=navigator.userAgent.toLowerCase();
+
+    // *** BROWSER VERSION ***
+    // Note: On IE5, these return 4, so use is_ie5up to detect IE5.
+    var is_major = parseInt(navigator.appVersion);
+    var is_minor = parseFloat(navigator.appVersion);
+
+    // Note: Opera and WebTV spoof Navigator.  We do strict client detection.
+    // If you want to allow spoofing, take out the tests for opera and webtv.
+    var is_nav  = ((agt.indexOf('mozilla')!=-1) && (agt.indexOf('spoofer')==-1)
+                && (agt.indexOf('compatible') == -1) && (agt.indexOf('opera')==-1)
+                && (agt.indexOf('webtv')==-1) && (agt.indexOf('hotjava')==-1));
+    var is_nav2 = (is_nav && (is_major == 2));
+    var is_nav3 = (is_nav && (is_major == 3));
+    var is_nav4 = (is_nav && (is_major == 4));
+    var is_nav4up = (is_nav && (is_major >= 4));
+    var is_navonly      = (is_nav && ((agt.indexOf(";nav") != -1) ||
+                          (agt.indexOf("; nav") != -1)) );
+    var is_nav6 = (is_nav && (is_major == 5));
+    var is_nav6up = (is_nav && (is_major >= 5));
+    var is_gecko = (agt.indexOf('gecko') != -1);
+
+
+    var is_ie     = ((agt.indexOf("msie") != -1) && (agt.indexOf("opera") == -1));
+    var is_ie3    = (is_ie && (is_major < 4));
+    var is_ie4    = (is_ie && (is_major == 4) && (agt.indexOf("msie 4")!=-1) );
+    var is_ie4up  = (is_ie && (is_major >= 4));
+    var is_ie5    = (is_ie && (is_major == 4) && (agt.indexOf("msie 5.0")!=-1) );
+    var is_ie5_5  = (is_ie && (is_major == 4) && (agt.indexOf("msie 5.5") !=-1));
+    var is_ie5up  = (is_ie && !is_ie3 && !is_ie4);
+    var is_ie5_5up =(is_ie && !is_ie3 && !is_ie4 && !is_ie5);
+    var is_ie6    = (is_ie && (is_major == 4) && (agt.indexOf("msie 6.")!=-1) );
+    var is_ie6up  = (is_ie && !is_ie3 && !is_ie4 && !is_ie5 && !is_ie5_5);
+
+    // KNOWN BUG: On AOL4, returns false if IE3 is embedded browser
+    // or if this is the first browser window opened.  Thus the
+    // variables is_aol, is_aol3, and is_aol4 aren't 100% reliable.
+    var is_aol   = (agt.indexOf("aol") != -1);
+    var is_aol3  = (is_aol && is_ie3);
+    var is_aol4  = (is_aol && is_ie4);
+    var is_aol5  = (agt.indexOf("aol 5") != -1);
+    var is_aol6  = (agt.indexOf("aol 6") != -1);
+
+    var is_opera = (agt.indexOf("opera") != -1);
+    var is_opera2 = (agt.indexOf("opera 2") != -1 || agt.indexOf("opera/2") != -1);
+    var is_opera3 = (agt.indexOf("opera 3") != -1 || agt.indexOf("opera/3") != -1);
+    var is_opera4 = (agt.indexOf("opera 4") != -1 || agt.indexOf("opera/4") != -1);
+    var is_opera5 = (agt.indexOf("opera 5") != -1 || agt.indexOf("opera/5") != -1);
+    var is_opera5up = (is_opera && !is_opera2 && !is_opera3 && !is_opera4);
+
+    var is_webtv = (agt.indexOf("webtv") != -1); 
+
+    var is_TVNavigator = ((agt.indexOf("navio") != -1) || (agt.indexOf("navio_aoltv") != -1)); 
+    var is_AOLTV = is_TVNavigator;
+
+    var is_hotjava = (agt.indexOf("hotjava") != -1);
+    var is_hotjava3 = (is_hotjava && (is_major == 3));
+    var is_hotjava3up = (is_hotjava && (is_major >= 3));
+
+    // *** JAVASCRIPT VERSION CHECK ***
+    var is_js;
+    if (is_nav2 || is_ie3) is_js = 1.0;
+    else if (is_nav3) is_js = 1.1;
+    else if (is_opera5up) is_js = 1.3;
+    else if (is_opera) is_js = 1.1;
+    else if ((is_nav4 && (is_minor <= 4.05)) || is_ie4) is_js = 1.2;
+    else if ((is_nav4 && (is_minor > 4.05)) || is_ie5) is_js = 1.3;
+    else if (is_hotjava3up) is_js = 1.4;
+    else if (is_nav6 || is_gecko) is_js = 1.5;
+    // NOTE: In the future, update this code when newer versions of JS
+    // are released. For now, we try to provide some upward compatibility
+    // so that future versions of Nav and IE will show they are at
+    // *least* JS 1.x capable. Always check for JS version compatibility
+    // with > or >=.
+    else if (is_nav6up) is_js = 1.5;
+    // NOTE: ie5up on mac is 1.4
+    else if (is_ie5up) is_js = 1.3
+
+    // HACK: no idea for other browsers; always check for JS version with > or >=
+    else is_js = 0.0;
+
+    // *** PLATFORM ***
+    var is_win   = ( (agt.indexOf("win")!=-1) || (agt.indexOf("16bit")!=-1) );
+    // NOTE: On Opera 3.0, the userAgent string includes "Windows 95/NT4" on all
+    //        Win32, so you can't distinguish between Win95 and WinNT.
+    var is_win95 = ((agt.indexOf("win95")!=-1) || (agt.indexOf("windows 95")!=-1));
+
+    // is this a 16 bit compiled version?
+    var is_win16 = ((agt.indexOf("win16")!=-1) || 
+               (agt.indexOf("16bit")!=-1) || (agt.indexOf("windows 3.1")!=-1) || 
+               (agt.indexOf("windows 16-bit")!=-1) );  
+
+    var is_win31 = ((agt.indexOf("windows 3.1")!=-1) || (agt.indexOf("win16")!=-1) ||
+                    (agt.indexOf("windows 16-bit")!=-1));
+
+    var is_winme = ((agt.indexOf("win 9x 4.90")!=-1));
+    var is_win2k = ((agt.indexOf("windows nt 5.0")!=-1));
+
+    // NOTE: Reliable detection of Win98 may not be possible. It appears that:
+    //       - On Nav 4.x and before you'll get plain "Windows" in userAgent.
+    //       - On Mercury client, the 32-bit version will return "Win98", but
+    //         the 16-bit version running on Win98 will still return "Win95".
+    var is_win98 = ((agt.indexOf("win98")!=-1) || (agt.indexOf("windows 98")!=-1));
+    var is_winnt = ((agt.indexOf("winnt")!=-1) || (agt.indexOf("windows nt")!=-1));
+    var is_win32 = (is_win95 || is_winnt || is_win98 || 
+                    ((is_major >= 4) && (navigator.platform == "Win32")) ||
+                    (agt.indexOf("win32")!=-1) || (agt.indexOf("32bit")!=-1));
+
+    var is_os2   = ((agt.indexOf("os/2")!=-1) || 
+                    (navigator.appVersion.indexOf("OS/2")!=-1) ||   
+                    (agt.indexOf("ibm-webexplorer")!=-1));
+
+    var is_mac    = (agt.indexOf("mac")!=-1);
+    // hack ie5 js version for mac
+    if (is_mac && is_ie5up) is_js = 1.4;
+    var is_mac68k = (is_mac && ((agt.indexOf("68k")!=-1) || 
+                               (agt.indexOf("68000")!=-1)));
+    var is_macppc = (is_mac && ((agt.indexOf("ppc")!=-1) || 
+                                (agt.indexOf("powerpc")!=-1)));
+
+    var is_sun   = (agt.indexOf("sunos")!=-1);
+    var is_sun4  = (agt.indexOf("sunos 4")!=-1);
+    var is_sun5  = (agt.indexOf("sunos 5")!=-1);
+    var is_suni86= (is_sun && (agt.indexOf("i86")!=-1));
+    var is_irix  = (agt.indexOf("irix") !=-1);    // SGI
+    var is_irix5 = (agt.indexOf("irix 5") !=-1);
+    var is_irix6 = ((agt.indexOf("irix 6") !=-1) || (agt.indexOf("irix6") !=-1));
+    var is_hpux  = (agt.indexOf("hp-ux")!=-1);
+    var is_hpux9 = (is_hpux && (agt.indexOf("09.")!=-1));
+    var is_hpux10= (is_hpux && (agt.indexOf("10.")!=-1));
+    var is_aix   = (agt.indexOf("aix") !=-1);      // IBM
+    var is_aix1  = (agt.indexOf("aix 1") !=-1);    
+    var is_aix2  = (agt.indexOf("aix 2") !=-1);    
+    var is_aix3  = (agt.indexOf("aix 3") !=-1);    
+    var is_aix4  = (agt.indexOf("aix 4") !=-1);    
+    var is_linux = (agt.indexOf("inux")!=-1);
+    var is_sco   = (agt.indexOf("sco")!=-1) || (agt.indexOf("unix_sv")!=-1);
+    var is_unixware = (agt.indexOf("unix_system_v")!=-1); 
+    var is_mpras    = (agt.indexOf("ncr")!=-1); 
+    var is_reliant  = (agt.indexOf("reliantunix")!=-1);
+    var is_dec   = ((agt.indexOf("dec")!=-1) || (agt.indexOf("osf1")!=-1) || 
+           (agt.indexOf("dec_alpha")!=-1) || (agt.indexOf("alphaserver")!=-1) || 
+           (agt.indexOf("ultrix")!=-1) || (agt.indexOf("alphastation")!=-1)); 
+    var is_sinix = (agt.indexOf("sinix")!=-1);
+    var is_freebsd = (agt.indexOf("freebsd")!=-1);
+    var is_bsd = (agt.indexOf("bsd")!=-1);
+    var is_unix  = ((agt.indexOf("x11")!=-1) || is_sun || is_irix || is_hpux || 
+                 is_sco ||is_unixware || is_mpras || is_reliant || 
+                 is_dec || is_sinix || is_aix || is_linux || is_bsd || is_freebsd);
+
+    var is_vms   = ((agt.indexOf("vax")!=-1) || (agt.indexOf("openvms")!=-1));
+
+
+/////////////////////////// CODE FOR BROWSER TYPE ENDS HERE /////////////////////////

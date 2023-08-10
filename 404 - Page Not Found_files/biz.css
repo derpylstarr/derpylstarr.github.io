@@ -1,0 +1,315 @@
+/************ Body Tag*************/
+body {margin: 10px 10px 0px 10px; left:11px; top:11px; background-color: #ebebeb;}
+
+
+/************ Tables ***************/
+table.containertbl {
+	position:absolute;
+	width: 760px;
+	background-color:#ffffff;
+}
+
+table.logotbl { 
+    width: 100%;
+    padding: 4px;
+    background-color: #FFFFFF;
+}
+
+table.headertbl { 
+    padding: 1px 4px 1px 4px;
+    background-color: #ebebeb;
+    border: 1px solid #cccccc;    
+    margin-bottom: 2px;   
+    position: relative;
+    width: 100%;
+}
+
+table.topmenutbl { 
+    background-color: #ffffff;
+    border-bottom: 4px solid #ff9900;
+    border-left: 0px solid #ffffff;
+    border-right: 0px solid #ffffff;
+    margin-bottom: 0px;
+    margin-top:0px;
+}
+
+table.databoundarytbl { 
+    background-color: #ffffff;
+    border: 8px solid #ebebeb;
+    margin: 0px;
+    padding: 0px;
+}
+
+table.datadisplaytbl { 
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    margin: 0px;
+    padding: 2px 2px 2px 4px;
+}
+
+table.nextprivtbl { 
+    background-color: #ebebeb;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+table.blockheadertbl { 
+    padding: 1px 4px 1px 4px;
+    background-color: #CADBEB; //DAF1FE;
+    border: 1px solid #cccccc; 
+    margin: 0px;
+}
+table.seperatortbl { 
+    background-color: #ffffff;
+    border-bottom: 10px solid #ffffff;
+    width: 100%;
+}
+
+table.simpletbl { 
+    background-color: #ffffff;
+    border: 0px;
+    margin: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    position: relative;
+    width: 100%;
+}
+
+table.maintbl { 
+    background-color: #ffffff;
+    border: 0px;
+    margin: 0px;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 100%;
+}
+
+table.footertbl {
+    position: relative;
+    background-color: #ebebeb;
+    border-top: 1px solid #ff9900;
+    width: 100%;
+    padding: 2px;
+}
+
+form.formbody { 
+    background-color: #ffffff;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+table.login_tbl { 
+	border: 1px solid #808080; 
+	background-color: #EEEEEE; 
+	padding: 0px 4px 0px 4px; 
+}
+
+table.login_tbl_hdr { 
+	background-color: #808080; 
+	padding: 0px 4px 0px 4px; 
+}
+
+/*****************************************
+BLOCK HEADER
+*****************************************/
+
+#blockheader{
+    width: 100%;
+    padding: 0px;
+    margin:0px;
+    float: left;
+}
+
+#blockheader ul{
+    margin: 0px;
+    padding-left: 4px;
+    padding-right: 4px;        
+}
+
+#blockheader ul.left_topmenu li{
+    text-align: center;
+    float: left;    
+}
+
+#blockheader li{
+    position: relative;  
+    font-size: 11px; 
+    line-height: 20px; 
+    font-family: Geneva, Arial, Helvetica, sans-serif; 	
+    list-style: none;
+    margin-right: 4px;
+    margin-left: 2px;
+    padding: 0px 5px 0px 0px;   
+}
+
+/*****************************************
+TOP MENU
+*****************************************/
+#topmenu{
+    width: 100%;
+    padding: 0px;
+    margin:0px;
+    float: left;
+}
+#topmenu ul{
+    margin: 0px;
+    padding-left: 8px;
+    padding-right: 8px;        
+}
+
+#topmenu ul.left_topmenu li{
+    text-align: center;
+    float: left;    
+}
+
+#topmenu ul.right_topmenu li{
+    text-align: center;
+    float: right;    
+}
+
+#topmenu li{
+    position: relative;  
+    font-size: 11px; 
+    line-height: 20px; 
+    font-family: Geneva, Arial, Helvetica, sans-serif; 	
+    list-style: none;
+    margin-right: 2px;
+    border-top: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;  
+    border-bottom: 0px solid #CCCCCC;   
+}
+
+#topmenu li a.menunav{	
+    font-weight: bold;
+    color: #000000; 
+    background-color: #ebebeb;
+    padding: 3px 10px 3px 10px;        
+}
+
+#topmenu li a.menunav:hover, .menunav-selected, .menunav-selected:hover {
+    color: #767676; 
+    font-weight: bold; 
+    background-color: #FF9900; //FCA71A; //F09D13;
+    padding: 3px 10px 3px 10px;        
+}
+
+
+/***** TEXT *****/
+
+.copyright, .top_dropdown, .header_text, .header_label, .page_label, .form_text, .page_text, .group_header, 
+.page_header, .home_page_text, 
+.home_page_header, .dark_tbl_header, .error_text, 
+.page_top_one, .page_top_two, .result_hdr_text, .subinfo_text, .form_text_box_login, .form_text_box, .form_drop_down, .form_text_area,
+.status_text, .rule_text
+{ font-family: "Trebuchet MS",trebuchet,arial, helvetica, sans-serif; font-style: normal; font-weight: normal; color: #333333; }
+.copyright { font-size: 11px; line-height: 16px;}
+.top_dropdown { font-size: 11px; line-height: 16px;}
+.header_text { font-size: 11px; line-height: 16px; }
+.header_label { font-size: 11px; line-height: 16px; font-weight: bold;}
+.page_label { font-size: 11px; line-height: 12px; }
+.form_text { font-size: 11px; line-height: 12px; }
+.page_text { font-size: 11px; line-height: 16px; }
+.group_header { font-size: 11px; font-weight: bold; color: #333333; line-height: 16px; }
+.rule_text { font-size: 11px; line-height: 16px; color: #0000FF; }
+.page_header { font-size: 14px; line-height: 18px; font-weight: bold; color: #FF6622; }
+.home_page_text { font-size: 12px; line-height: 16px; color: #000000; }
+.home_page_header { font-size: 16px; line-height: 20px; font-weight: bold; color: #FF6622; }
+.copyright_text { font-size: 10px; line-height: 12px; color: #808080; }
+
+.dark_tbl_header { font-size: 11px; line-height: 14px; font-weight: bold; color: #000000; }
+.error_text { font-size: 11px; line-height: 16px; color: #FF0000; }
+.status_text { font-size: 11px; line-height: 16px; color: #0000FF; font-weight: bold; }
+.page_top_one { font-size: 11px; line-height: 14px; color: #FFFFFF; }
+.page_top_two { font-size: 11px; line-height: 14px; color: #FF6622; font-weight: bold; }
+.result_hdr_text { font-size: 11px; line-height: 16px; font-weight: bold; color: #000000; }
+.subinfo_text { font-size: 9px; font-weight: normal; color: #666666; line-height: 10px;}
+
+
+.form_text_box_login, .form_text_box, .form_drop_down, .form_text_area
+{ font-size: 11px; line-height: 14px; color: #333333; background: #FFFFFF; padding: 0px 0px 0px 2px;}
+
+.form_text_box_login { border-top: 1px solid; border-right: 1px solid; border-left: 1px solid; border-bottom: 1px solid; border-color: #000000; }
+.form_text_box { border-top: 1px solid; border-right: 1px solid; border-left: 1px solid; border-bottom: 1px solid; border-color: #000000; }
+.form_drop_down { border-top: 1px solid; border-right: 1px solid; border-left: 1px solid; border-bottom: 1px solid; border-color: #000000; }
+.form_text_area { border-top: 1px solid; border-right: 1px solid; border-left: 1px solid; border-bottom: 1px solid; border-color: #000000; width:100%; height:90%; }
+
+/***** BUTTONS *****/
+
+.tbl_btn, .page_btn 
+{ font-family: Verdana, arial, helvetica, sans-serif; font-style: normal; font-weight: bold; color: #333333; background: #EEEEEE; border: 1px solid #808080; border-left: 10px solid #808080; padding: 0px 0px 0px 0px; }
+
+.tbl_btn { font-size: 11px; line-height: 14px; }
+.page_btn { font-size: 11px; line-height: 14px; }
+
+
+/***** LINKS *****/
+
+a, a.topbar_link, a.page_nav, a.dwnld_link, a.top_nav 
+{ font-family: "Trebuchet MS",trebuchet, arial, helvetica, sans-serif; font-style: normal; font-weight: normal; color: #0000FF; text-decoration: none; }
+
+a { font-size: 11px; line-height: 16px; }
+a:hover { color: #FF0000;}
+
+a.top_nav {font-size: 11px; line-height: 16px; color:#000000}
+a.top_nav:hover { color: #FF6622; }
+
+a.page_nav { font-size: 11px; line-height: 16px; color: #79973F; }
+a.page_nav:hover { color: #79973F; text-decoration: underline; }
+
+a.topbar_link { font-size: 11px; line-height: 14px; color: #FFFFFF; font-weight: normal; }
+a.topbar_link:hover { color: #FFFFFF; text-decoration: underline; }
+
+a.dwnld_link { font-size: 11px; line-height: 12px; color: #0000FF; }
+a.dwnld_link:hover { text-decoration: underline; }
+
+
+/***** COLORS & BORDERS *****/
+
+table.body_tbl { border-bottom: 1px solid #000000; border-top: 1px solid #000000; border-right: 1px solid #000000; border-left: 1px solid #000000; background-color: #FFFFFF; }
+table.body_border_tbl { border: 0px solid #000000; background-color: #FFFFFF; padding: 0px 0px 0px 0px; }
+table.login_tbl { border-bottom: 1px solid #000000; border-top: 1px solid #000000; background-color: #EEEEEE; padding: 0px 4px 0px 4px; }
+table.login_tbl_hdr { background-color: #808080; padding: 0px 4px 0px 4px; }
+table.result_tbl { border: 1px solid #C0C0C0; background-color: #FFFFFF; }
+table.result_inside_tbl { border-top: 1px solid #000000; border-bottom: 1px solid #000000; }
+
+table.rule_result_tbl { border: 1px solid #C0C0C0; background-color: #FFFFFF; }
+table.rule_result_alt_tbl { border: 1px solid #C0C0C0; background-color: #EFEFEF; }
+
+tr.page_break { height: 12px; }
+tr.form_break { height: 4px; }
+tr.error_row { height: 0px; }
+tr.top_nav_one_bg { background-color: #000000; height: 20px; }
+tr.page_nav_seperator { background-color: #000000; height: 1px; }
+tr.result_tbl_hdr { background-color: #C0C0C0; }
+tr.result_tbl_row { background-color: #FFFFFF; }
+tr.result_tbl_alt_row { background-color: #EFEFEF; }
+
+td.logo_bkg { background-color: #000000; }
+td.logo_side_bkg { background-color: #000000; padding: 0px 4px 0px 4px; line-height: 14px; }
+td.my_acct { border: 1px solid #C3D9FF; padding: 8px; background-color: #E8EEFA; }
+td.home_img { border-right: 1px solid #000000; }
+td.result_tbl_cell { padding: 2px 4px 2px 4px; }
+td.result_tbl_hdr_cell { padding: 2px 4px 2px 4px; }
+
+tr.nav_page_seperator { background: #C0C0C0; height: 1px; }
+
+#tab_nav_one { margin: 0px; padding: 0px; }
+#tab_nav_one ul
+{ font-family: Verdana, Arial, helvetica, sans-serif; font-style: normal; font-weight: bold; font-size: 12px; line-height: 18px; margin-left: 0px; padding-left: 0px; }
+#tab_nav_one li { display: inline; margin-left: 0px; padding-left: 0px; }
+#tab_nav_one a 
+{ float: left; color: #FFFFFF; display: block; padding: 2px 12px 2px 12px; text-decoration: none; font-style: normal; font-weight: bold; background-color: #333333; border-right: 1px solid #434343; border-top: 1px solid #434343; border-left: 1px solid #434343; }
+#tab_nav_one a:hover { background-color: #FF6622; }
+#tab_nav_one #current a { font-weight: bold; background-color: #FF6622; }
+
+#partner_sel ul { list-style_type: none; }
+#partner_sel ul li { padding-left: 5px; margin_left: 5px;}
+#partner_sel ul li ul { list-style-type: none; }
+#partner_sel ul li ul li { padding-left: 10px; margin_left: 20px; }
+
+.mandatory_text
+{ font-family: arial, helvetica, sans-serif; font-style: normal; }
+.mandatory_text { font-size: 12px; font-weight: normal; color: #ff0000; line-height: 16px; }

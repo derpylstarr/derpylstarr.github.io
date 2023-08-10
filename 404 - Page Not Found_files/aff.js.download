@@ -1,0 +1,108 @@
+function ivrFieldIdChecked(ivrfieldId,le)
+{
+	
+	if(document.getElementById(ivrfieldId).checked==true)
+	{
+		if(document.getElementById('div'+ivrfieldId).style.display == 'none')	
+		{
+			document.getElementById('div'+ivrfieldId).style.display="block";
+		}
+		if(document.getElementById('add'+ivrfieldId).style.display == 'none')	
+		{
+			document.getElementById('add'+ivrfieldId).style.display="block";
+		}
+	}
+	else
+	{
+		if(document.getElementById(ivrfieldId).checked==false)
+		{
+		document.getElementById('div'+ivrfieldId).style.display="none";
+		document.getElementById('add'+ivrfieldId).style.display="none";
+		}
+	}
+}
+
+function checkMessageType(value,msgId)
+{
+	if(value == 5 && document.getElementById('dtmfList'+msgId).style.display == 'none')
+	{
+		document.getElementById('dtmfList'+msgId).style.display="block";
+	}else {
+	document.getElementById('dtmfList'+msgId).style.display="none";
+	}	
+	if(value == 5 && document.getElementById('dtmf'+msgId).style.display == 'none')
+	{
+		document.getElementById('dtmf'+msgId).style.display="block";
+	}else {
+	document.getElementById('dtmf'+msgId).style.display="none";
+	}
+}
+
+function myFocus()
+{	
+  var formIndex = 0;
+  var formCount = document.forms.length;
+  var eleIndex = 0;
+  var eleCount = 0;
+  var found = false;
+  //alert("Numbre of forms "+formCount);
+
+  for (formIndex = 0; formIndex < formCount; formIndex++)
+  {
+    found = false;
+    eleCount = document.forms[formIndex].elements.length;
+    //alert("Numbre of elements "+eleCount);
+    
+    for(eleIndex = 0; eleIndex < eleCount; eleIndex++)
+    {
+      if(document.forms[formIndex].elements[eleIndex].type != "hidden")
+      {
+        //focus on the element
+        document.forms[formIndex].elements[eleIndex].focus();
+        //alert("Focussing on form "+formIndex+" element "+eleIndex);
+        found = true;
+        break;
+      }
+    }
+
+    if(found)
+      break;
+  }
+  
+  window.scroll(0,0);
+}
+
+
+function popup(targetURL, width, height) 
+{
+  var props = "scrollBars=yes,resizable=no,toolbar=no,menubar=no,location=no,directories=no,left=0,top=0,width="+width+",height="+height;
+  var popup = window.open(targetURL, "Details", props);
+  popup.focus();
+}
+function showHide(id)
+{
+	if(document.getElementById(id).style.visibility=='hidden')
+	{
+		document.getElementById(id).style.visibility = "visible";
+	}
+	else
+	{
+		document.getElementById(id).style.visibility = "hidden";
+	}
+	return false;
+}
+function show(id)
+{
+	var styleObj=getStyle(id);
+	if ((document.getElementById && !document.all) || window.opera)
+		styleObj.display='table-row';
+	else
+		styleObj.display='inline';
+}
+//CHANGES THE DISPLAY PROPERTY OF ELEMENT 'ID' TO NONE
+function hide(id)
+{
+	var styleObj=getStyle(id);
+	styleObj.display='none';
+}
+
