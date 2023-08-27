@@ -95,7 +95,7 @@ a.link2 {
   display: grid;
   margin-top: 50px;
   background-color:gray ;
-  background: url(../Assets/20230718_121313.jpg);
+  background: url(../Assets/20220703_193625.jpg);
   background-repeat: no-repeat;
   background-attachment: fixed;  
   background-size: cover; 
@@ -233,7 +233,7 @@ a.link2 {
 
 .box {
 
-  margin: 20px;
+  margin: 10px;
   width: 500px;
   height: 500px;
   background-color: #ccccccb4;
@@ -254,6 +254,51 @@ a.link2 {
   'FILL' 1,
 }
 
+.box_large {
+
+  margin: 15px;
+  width: 950px;
+  height: 750px;
+  background-color: #ccccccb4;
+  
+  
+  text-align: center;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 28px;
+
+  border-radius: 12px;
+}
+
+.box_large:hover{
+  background-color: #78d1e983;
+  color: white;
+  font-variation-settings:
+  'FILL' 1,
+}
+
+.box_tall {
+
+  margin: 15px;
+  width: 550px;
+  height: 750px;
+  background-color: #ccccccb4;
+  
+  text-align: center;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 28px;
+  
+  border-radius: 12px;
+}
+
+.box_tall:hover{
+  background-color: #78d1e983;
+  color: white;
+  font-variation-settings:
+  'FILL' 1,
+}
+
 
 hr {
   color: #000000; 
@@ -267,22 +312,21 @@ hr {
   border-radius: 10px;
 }
 
-
 .footerbar-button{
   align-items: center;
   font-size: 24px;
   background-color: #78d1e9;
-  border-color: #78d1e9;
+  /* border-color: #78d1e9; */
+  border-radius: 6px;
   border-style: none;
-  padding: 20px;
-  border-width: 3px;
+  margin: 2px;
+  padding: 15px;
   color: white;
   text-align: center;
   font-family: 'Ubuntu';
   font-size: medium;
   height: 100px;
   width: 200px;
-  border-radius: 6px;
   cursor: pointer;
 }
 

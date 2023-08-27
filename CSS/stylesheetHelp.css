@@ -202,6 +202,33 @@ a.link2 {
   'FILL' 1,
 }
 
+
+.body-button-red{
+  display: -ms-inline-grid;
+  justify-content: center;
+  right: 300px;
+  background-color: #e97878;
+  border-style: none;
+  padding: 10px;
+  color: white;
+  text-align: center;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 28px;
+  height: 120px;
+  width: 240px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.body-button-red:hover{
+  background-color: #2f1414;
+  color: white;
+  font-variation-settings:
+  'FILL' 1,
+}
+
+
 .material-symbols-outlined {
 
   text-align: center;
@@ -254,17 +281,17 @@ a.link2 {
   align-items: center;
   font-size: 24px;
   background-color: #78d1e9;
-  border-color: #78d1e9;
+  /* border-color: #78d1e9; */
+  border-radius: 6px;
   border-style: none;
-  padding: 20px 20px;
-  border-width: 3px;
+  margin: 2px;
+  padding: 15px;
   color: white;
   text-align: center;
   font-family: 'Ubuntu';
   font-size: medium;
   height: 100px;
   width: 200px;
-  border-radius: 6px;
   cursor: pointer;
 }
 
